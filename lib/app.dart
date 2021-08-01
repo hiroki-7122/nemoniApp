@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class NemoniApp extends StatelessWidget {
@@ -14,14 +15,15 @@ class NemoniApp extends StatelessWidget {
     return CupertinoApp(
       theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
-          navigationBar: new CupertinoNavigationBar(
-            middle: Text('nemoni 顧客管理'),
-          ),
           child: new NemoniAppHome(),
      ),
      routes: <String, WidgetBuilder>{
         '/customer_list_page': (BuildContext context) => CustomerListPage(),
-        '/home_pageB': (BuildContext context) => HomePageB(),
+        '/appoint_page': (BuildContext context) => AppointPage(),
+        '/follow_page': (BuildContext context) => FollowPage(),
+        '/report_page': (BuildContext context) => ReportPage(),
+        '/menu_page': (BuildContext context) => MenuPage(),
+
      });
   }
 }
@@ -96,10 +98,71 @@ class _NemoniAppHomeState extends State<NemoniAppHome> {
           builder: (context) {
             switch (index) {
               case 0:
-              return CupertinoPageScaffold(child: CustomerListPage());
+              return CupertinoPageScaffold(
+                navigationBar: CupertinoNavigationBar(
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 8, 15, 8),
+                  leading: Center(
+                    widthFactor: 1,
+                    child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(text: "2 ",
+                                      style: GoogleFonts.robotoCondensed(
+                                      textStyle: Theme.of(context).textTheme.headline4,
+                                      color: Color.fromRGBO(0, 0, 0, .7),
+                                      fontSize: 24.0,
+                                      fontWeight: FontWeight.w600,
+                                  )),
+                                  TextSpan(text: "USERS",style: GoogleFonts.robotoCondensed(
+                                      textStyle: Theme.of(context).textTheme.headline4,
+                                      color: Color.fromRGBO(0, 0, 0, .7),
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.w600,
+                                  )),
+                                ],
+                              ),
+                            )
+                    ),
+                  middle: Center(
+                    child: 
+                      CupertinoSearchTextField(
+                        placeholder: "",
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        prefixInsets: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                        style: GoogleFonts.roboto(
+                                      textStyle: Theme.of(context).textTheme.headline4,
+                                      color: Color.fromRGBO(0, 0, 0, 1),
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w400,
+                                  ),
+                      )
+                  ),
+                  trailing: Center(
+                    widthFactor: 1.3,
+                    child:
+                      CupertinoButton(
+                        minSize: 22,
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                        child: Icon(CupertinoIcons.plus, size: 20.0),
+                        color: Colors.cyan,
+                        onPressed: () {}
+                      ),
+                  ),
+                  ),
+                child: CustomerListPage());
                 break;
               case 1:
-                return CupertinoPageScaffold(child: HomePageB());
+                return CupertinoPageScaffold(child: AppointPage());
+                break;
+              case 2:
+                return CupertinoPageScaffold(child: FollowPage());
+                break;
+              case 3:
+                return CupertinoPageScaffold(child: ReportPage());
+                break;
+              case 4:
+              return CupertinoPageScaffold(child: MenuPage());
                 break;
             }
             return null;
@@ -120,53 +183,34 @@ class CustomerListPage extends StatefulWidget {
 class CustomerListPageState extends State<CustomerListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CupertinoButton(
-              padding: EdgeInsets.fromLTRB(30,10,30,10),
-              borderRadius: BorderRadius.all(Radius.circular(2.5)),
-              child: Text("サンプルボタン",style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.0),
-              ),
-              color: Colors.cyan,
-              onPressed: () {
-                showCupertinoDialog(
-                    context: context,
-                    builder: (_) => CupertinoAlertDialog(
-                      title: Text("サンプルのダイアログ"),
-                      content: Text("アクションを選択してください。"),
-                      actions: [
-                        CupertinoDialogAction(
-                            child: Text('閉じる'),
-                            isDestructiveAction: true,
-                            onPressed: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                            }),
-                        CupertinoDialogAction(
-                          child: Text('OK'),
-                          onPressed: () {
-                            print('OK');
-                            Navigator.of(context, rootNavigator: true).pop();
-                          },
-                        )
-                      ],
-                    ));
-              },
+      floatingActionButton: CupertinoSearchTextField(
+      onChanged: (String value) {
+        print('The text has changed to:');
+      },
+      onSubmitted: (String value) {
+        print('Submitted text:');
+      },
+    ),
+      body: CustomScrollView(
+        slivers: [
+          CupertinoSliverNavigationBar(
+            largeTitle: Text(
+              'ホーム',
             ),
-        ]),
+          ),
+        ],
       )
     );
     }
 }
 
-class HomePageB extends StatefulWidget {
-  static const routeName = '/home_pageB';
+class AppointPage extends StatefulWidget {
+  static const routeName = '/Appoint_page';
   @override
-  HomePageBState createState() => HomePageBState();
+  AppointPageState createState() => AppointPageState();
 }
 
-class HomePageBState extends State<HomePageB> {
+class AppointPageState extends State<AppointPage> {
   Widget build(BuildContext context) {
         return Scaffold(
       body: Center(
@@ -207,4 +251,51 @@ class HomePageBState extends State<HomePageB> {
       )
     );
   }
+}
+
+
+
+
+
+class FollowPage extends StatefulWidget {
+  static const routeName = '/follow_page';
+  @override
+  FollowPageState createState() => FollowPageState();
+}
+
+class FollowPageState extends State<FollowPage> {
+    Widget build(BuildContext context) {
+      return Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text('Default'),
+          ]
+        ),
+      );
+    }
+}
+
+class ReportPage extends StatefulWidget {
+  static const routeName = '/report_page';
+  @override
+  ReportPageState createState() => ReportPageState();
+}
+
+class ReportPageState extends State<ReportPage> {
+    Widget build(BuildContext context) {
+      return Text("AAA");
+    }
+}
+
+class MenuPage extends StatefulWidget {
+  static const routeName = '/menu_page';
+  @override
+  MenuPageState createState() => MenuPageState();
+}
+
+class MenuPageState extends State<MenuPage> {
+    Widget build(BuildContext context) {
+      return Text("AAA");
+    }
 }
