@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 import 'app.dart';
 
-void main() {
-  return runApp(LimoniApp());
-}
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  return runApp(NemoniApp());
+} 
