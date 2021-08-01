@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'widget.dart';
 
 
 class NemoniApp extends StatelessWidget {
@@ -30,152 +31,19 @@ class NemoniApp extends StatelessWidget {
 
 class NemoniAppHome extends StatefulWidget {
   static const routeName = '/';
-
   @override
   _NemoniAppHomeState createState() => _NemoniAppHomeState();
 }
 
 class _NemoniAppHomeState extends State<NemoniAppHome> {
-
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person_3, size: 36.0),
-            title: const Text(
-              "顧客リスト",
-              style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w600)
-                  ),
-              ),
-            // Icon(IconData(0xf394,fontFamily: CupertinoIcons.iconFont,fontPackage: CupertinoIcons.iconFontPackage,))
-            // アイコン番号を直接書くこーゆーのもあるらしい
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.flag, size: 24.0),
-            title: const Text(
-              "アポ一覧",
-              style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w600)
-                  ),
-              ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.repeat, size: 24.0),
-            title: const Text(
-              "フォロー先一覧",
-              style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w600)
-                  ),
-              ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.waveform_path_ecg, size: 24.0),
-            title: const Text(
-              "レポート",
-              style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w600)
-                  ),
-              ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.slider_horizontal_3, size: 24.0),
-            title: const Text(
-              "メニュー",
-              style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w600)
-                  ),
-              ),
-        ],
-        activeColor: Colors.cyan,
-        inactiveColor: Color.fromRGBO(0, 0, 0, 0.4),
-      ),      
-      tabBuilder: (BuildContext context, int index) {
-        return CupertinoTabView(
-          builder: (context) {
-            switch (index) {
-              case 0:
-              return CupertinoPageScaffold(
-                navigationBar: CupertinoNavigationBar(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 8, 15, 8),
-                  leading: Center(
-                    widthFactor: 1,
-                    child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(text: "2 ",
-                                      style: GoogleFonts.robotoCondensed(
-                                      textStyle: Theme.of(context).textTheme.headline4,
-                                      color: Color.fromRGBO(0, 0, 0, .7),
-                                      fontSize: 24.0,
-                                      fontWeight: FontWeight.w600,
-                                  )),
-                                  TextSpan(text: "USERS",style: GoogleFonts.robotoCondensed(
-                                      textStyle: Theme.of(context).textTheme.headline4,
-                                      color: Color.fromRGBO(0, 0, 0, .7),
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                  )),
-                                ],
-                              ),
-                            )
-                    ),
-                  middle: Center(
-                    child: 
-                      CupertinoSearchTextField(
-                        placeholder: "",
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        prefixInsets: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        style: GoogleFonts.roboto(
-                                      textStyle: Theme.of(context).textTheme.headline4,
-                                      color: Color.fromRGBO(0, 0, 0, 1),
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w400,
-                                  ),
-                      )
-                  ),
-                  trailing: Center(
-                    widthFactor: 1.3,
-                    child:
-                      CupertinoButton(
-                        minSize: 22,
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        child: Icon(CupertinoIcons.plus, size: 20.0),
-                        color: Colors.cyan,
-                        onPressed: () {}
-                      ),
-                  ),
-                  ),
-                child: CustomerListPage());
-                break;
-              case 1:
-                return CupertinoPageScaffold(child: AppointPage());
-                break;
-              case 2:
-                return CupertinoPageScaffold(child: FollowPage());
-                break;
-              case 3:
-                return CupertinoPageScaffold(child: ReportPage());
-                break;
-              case 4:
-              return CupertinoPageScaffold(child: MenuPage());
-                break;
-            }
-            return null;
-          },
-        );
-      },
-    );
+    return BottomTabMenu();
   }
 }
 
 class CustomerListPage extends StatefulWidget {
   static const routeName = '/customer_list_page';
-
   @override
   CustomerListPageState createState() => CustomerListPageState();
 }
@@ -183,24 +51,111 @@ class CustomerListPage extends StatefulWidget {
 class CustomerListPageState extends State<CustomerListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: CupertinoSearchTextField(
-      onChanged: (String value) {
-        print('The text has changed to:');
-      },
-      onSubmitted: (String value) {
-        print('Submitted text:');
-      },
-    ),
-      body: CustomScrollView(
-        slivers: [
-          CupertinoSliverNavigationBar(
-            largeTitle: Text(
-              'ホーム',
-            ),
+      backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+      body: Padding(
+        padding: EdgeInsets.only(left: 10, top: 88,right: 10,bottom: 0),
+        child: CustomScrollView(
+          slivers: <Widget>[
+            // CupertinoSliverNavigationBar(
+            //   largeTitle: Text(
+            //     'ホーム',
+            //   ),
+            // ),
+            SliverFixedExtentList(
+                itemExtent: 75.0,
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Image.asset("images/NRI_icon.jpeg"),
+                            margin: EdgeInsets.all(8),
+                          ),
+                          Text('宇都宮 海斗', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
+                        ]
+                      ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: Image.asset("images/NTTDATA_icon.png"),
+                              margin: EdgeInsets.all(8),
+                            ),
+                            Text('榎田 皓太', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
+                          ]
+                        ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: Image.asset("images/NTTDATA_icon.png"),
+                                margin: EdgeInsets.all(8),
+                              ),
+                              Text('甲斐 壮', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
+                            ]
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: Image.asset("images/Yahoo_icon.jpeg"),
+                                margin: EdgeInsets.all(8),
+                              ),
+                              Text('矢野 大輝', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
+                            ]
+                          ),
+                          ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      )
-    );
+        ),
+      );
     }
 }
 
@@ -226,25 +181,8 @@ class AppointPageState extends State<AppointPage> {
               onPressed: () {
                 showCupertinoDialog(
                     context: context,
-                    builder: (_) => CupertinoAlertDialog(
-                      title: Text("サンプルのダイアログ"),
-                      content: Text("アクションを選択してください。"),
-                      actions: [
-                        CupertinoDialogAction(
-                            child: Text('閉じる'),
-                            isDestructiveAction: true,
-                            onPressed: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                            }),
-                        CupertinoDialogAction(
-                          child: Text('OK'),
-                          onPressed: () {
-                            print('OK');
-                            Navigator.of(context, rootNavigator: true).pop();
-                          },
-                        )
-                      ],
-                    ));
+                    builder: (_) => alertDialog(context),
+                );
               },
             ),
         ]),
