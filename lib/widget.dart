@@ -110,7 +110,7 @@ return CupertinoNavigationBar(
         placeholder: "",
         borderRadius: BorderRadius.all(Radius.circular(8)),
         prefixInsets: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-        style: googleFontRobot(12.0, FontWeight.w600, 1.0),
+        style: googleFontRobot(12.0, FontWeight.w600, 1.0, [0, 0, 0]),
       )
   ),
   trailing: Center(
@@ -150,9 +150,9 @@ CupertinoAlertDialog alertDialog(context) {
   );
 }
 
-TextStyle googleFontRobot(fontSize, weight, opacity) {
+TextStyle googleFontRobot(fontSize, weight, opacity, color) {
   return GoogleFonts.roboto(
-      color: Color.fromRGBO(0, 0, 0, opacity),
+      color: Color.fromRGBO(color[0], color[1], color[2], opacity),
       fontSize: fontSize,
       fontWeight: weight,
     );
@@ -165,3 +165,99 @@ TextStyle googleFontRobotCondensed(fontSize, weight, opacity) {
       fontWeight: weight,
     );
 }
+
+Container customerList(name, imgPath) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    height: 65,
+    margin: EdgeInsets.fromLTRB(0, 6, 0, 0),
+    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+    child: Row(
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+          ),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Image.asset(imgPath),
+          margin: EdgeInsets.all(8),
+        ),
+        Text(name, style: googleFontRobot(14.0, FontWeight.w600, 1.0, [0, 0, 0])),
+      ]
+    ),
+    );
+}
+
+Container customerListTag(prefixChar) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.cyan,
+      borderRadius: BorderRadius.circular(4),
+    ),
+    margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+    padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
+    child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+          ),
+          margin: EdgeInsets.all(4),
+          child: Text(prefixChar, style: googleFontRobot(12.0, FontWeight.w600, 1.0, [255, 255, 255])),
+        ),
+    );
+}
+
+ Widget buildCupertinoSegmentedControl() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+      child: CupertinoSegmentedControl(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        borderColor: Colors.cyan,
+        children: {
+          "1": Column(
+            children: [
+              Icon(CupertinoIcons.at, size: 24.0, color: Colors.cyan,),
+              Text(
+              "50音順",
+              style: TextStyle(
+                  color:Colors.cyan,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600),
+                  )
+              ],
+          ),
+          "2": Column(
+            children: [
+              Icon(CupertinoIcons.star, size: 24.0, color: Colors.cyan,),
+              Text(
+              "お気に入り",
+              style: TextStyle(
+                  color:Colors.cyan,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600),
+                  )
+              ],
+          ),
+          "3": Column(
+            children: [
+              Icon(CupertinoIcons.checkmark_seal, size: 24.0, color: Colors.cyan,),
+              Text(
+              "最終フォロー",
+              style: TextStyle(
+                  color:Colors.cyan,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600),
+                  )
+              ],
+          ),
+          },
+        onValueChanged: (value) {
+          if (value == "1") {
+          }
+          if (value == "2") {
+          }
+      },)
+    );
+  }

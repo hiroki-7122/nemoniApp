@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'widget.dart';
 
 
@@ -53,7 +53,7 @@ class CustomerListPageState extends State<CustomerListPage> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(240, 240, 240, 1),
       body: Padding(
-        padding: EdgeInsets.only(left: 10, top: 88,right: 10,bottom: 0),
+        padding: EdgeInsets.fromLTRB(10, 88,10, 0),
         child: CustomScrollView(
           slivers: <Widget>[
             // CupertinoSliverNavigationBar(
@@ -61,94 +61,17 @@ class CustomerListPageState extends State<CustomerListPage> {
             //     'ホーム',
             //   ),
             // ),
-            SliverFixedExtentList(
-                itemExtent: 75.0,
+            SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: Image.asset("images/NRI_icon.jpeg"),
-                            margin: EdgeInsets.all(8),
-                          ),
-                          Text('宇都宮 海斗', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
-                        ]
-                      ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: Image.asset("images/NTTDATA_icon.png"),
-                              margin: EdgeInsets.all(8),
-                            ),
-                            Text('榎田 皓太', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
-                          ]
-                        ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: Image.asset("images/NTTDATA_icon.png"),
-                                margin: EdgeInsets.all(8),
-                              ),
-                              Text('甲斐 壮', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
-                            ]
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: Image.asset("images/Yahoo_icon.jpeg"),
-                                margin: EdgeInsets.all(8),
-                              ),
-                              Text('矢野 大輝', style: googleFontRobot(14.0, FontWeight.w600, 1.0)),
-                            ]
-                          ),
-                          ),
+                    buildCupertinoSegmentedControl(),
+                    customerListTag("NRI 野村総合研究所"),
+                    customerList("宇都宮 海斗", "images/NRI_icon.jpeg"),
+                    customerListTag("株式会社エヌ・ティ・ティ・データ"),
+                    customerList("榎田 皓太", "images/NTTDATA_icon.png"),
+                    customerList("甲斐 壮", "images/NTTDATA_icon.png"),
+                    customerListTag("ヤフー株式会社"),
+                    customerList("矢野 大輝", "images/Yahoo_icon.jpeg"),
                   ],
                 ),
               ),
